@@ -40,7 +40,8 @@
                 </form>
             </div>
             <div id="sumsub-websdk-container"></div>
-            <div v-if="verficationCompleted" class="kyc_action">
+            <!-- <div v-if="verficationCompleted" class="kyc_action"> -->
+            <div class="kyc_action">
                 <v-btn type="cancel" @click="close" class="outlined_button">Close</v-btn>
             </div>
         </Modal>
@@ -86,6 +87,10 @@ export default class KycModal extends Vue {
     userData: UserData = {
         email: '',
         phone: '',
+    }
+    @Watch('verficationCompleted')
+    onVerificationCompleted() {
+        this.$store.dispatch('Accounts/updateKycStatus')
     }
     @Watch('$root.theme', { immediate: true })
     onthemechange(val: string) {
@@ -372,7 +377,6 @@ button .arrow {\
     }
 
     async close() {
-        await this.$store.dispatch('Accounts/updateKycStatus')
         this.$refs.modal.close()
     }
 

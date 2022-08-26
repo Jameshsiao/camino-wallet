@@ -40,8 +40,7 @@
                 </form>
             </div>
             <div id="sumsub-websdk-container"></div>
-            <!-- <div v-if="verficationCompleted" class="kyc_action"> -->
-            <div class="kyc_action">
+            <div v-if="verficationCompleted" class="kyc_action">
                 <v-btn type="cancel" @click="close" class="outlined_button">Close</v-btn>
             </div>
         </Modal>

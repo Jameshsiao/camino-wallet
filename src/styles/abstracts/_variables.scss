@@ -1,6 +1,6 @@
 :root {
     --border-radius-lg: 12px;
-    --border-radius-sm: 7px;
+    --border-radius-sm: 8px;
     --primary-btn-border-color: #149ded;
     --secondary-color: #149ded;
     --primary-border: solid 1px var(--primary-border-color);
@@ -34,6 +34,7 @@ html[data-theme='day'] {
     --sidebar-background: #fff;
     --icon-color: #0f172a;
     --icon-color-light: #334155;
+    --disabled-text: #94a3b8;
 }
 
 html[data-theme='night'] {
@@ -61,6 +62,7 @@ html[data-theme='night'] {
     --sidebar-background: #1e293b;
     --icon-color: #ffffff;
     --icon-color--light: #ffffff;
+    --disabled-text: #94a3b8;
 }
 
 $mobile_width: 900px;

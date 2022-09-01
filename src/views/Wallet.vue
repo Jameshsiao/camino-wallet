@@ -1,5 +1,8 @@
 <template>
     <div class="wallet_view" ref="wallet_view">
+        <template>
+            <GuideModal class="moo" ref="guide_modal"></GuideModal>
+        </template>
         <UpdateKeystoreModal v-if="isManageWarning"></UpdateKeystoreModal>
         <transition name="fade" mode="out-in">
             <sidebar class="panel sidenav"></sidebar>
@@ -26,6 +29,7 @@ import TopInfo from '@/components/wallet/TopInfo.vue'
 import Sidebar from '@/components/wallet/Sidebar.vue'
 import MainPanel from '@/components/SidePanels/MainPanel.vue'
 import UpdateKeystoreModal from '@/components/modals/UpdateKeystore/UpdateKeystoreModal.vue'
+import GuideModal from '@/components/modals/GuideModal.vue'
 
 const TIMEOUT_DURATION = 60 * 7 // in seconds
 const TIMEOUT_DUR_MS = TIMEOUT_DURATION * 1000
@@ -36,6 +40,7 @@ const TIMEOUT_DUR_MS = TIMEOUT_DURATION * 1000
         MainPanel,
         TopInfo,
         UpdateKeystoreModal,
+        GuideModal,
     },
 })
 export default class Wallet extends Vue {
@@ -46,6 +51,10 @@ export default class Wallet extends Vue {
     // Set the logout timestamp to now + TIMEOUT_DUR_MS
     resetTimer() {
         this.logoutTimestamp = Date.now() + TIMEOUT_DUR_MS
+    }
+    $refs!: {
+        guide_modal: GuideModal
+        wallet_view: HTMLDivElement
     }
 
     checkLogout() {
@@ -78,16 +87,18 @@ export default class Wallet extends Vue {
     }
 
     mounted() {
-        let view = this.$refs.wallet_view as HTMLDivElement
+        let view = this.$refs.wallet_view
 
         view.addEventListener('mousemove', this.resetTimer)
         view.addEventListener('mousedown', this.resetTimer)
 
         window.addEventListener('beforeunload', this.unload)
+        console.log('fhem lanaza')
+        if (!this.kycStatus) this.$refs.guide_modal.open()
     }
 
     beforeDestroy() {
-        let view = this.$refs.wallet_view as HTMLDivElement
+        let view = this.$refs.wallet_view
         // Remove Event Listeners
         view.removeEventListener('mousemove', this.resetTimer)
         view.removeEventListener('mousedown', this.resetTimer)
@@ -97,7 +108,9 @@ export default class Wallet extends Vue {
     destroyed() {
         clearInterval(this.intervalId!)
     }
-
+    get kycStatus(): boolean {
+        return this.$store.getters['Accounts/kycStatus']
+    }
     get isManageWarning(): boolean {
         if (this.$store.state.warnUpdateKeyfile) {
             return true
@@ -110,3 +123,9 @@ export default class Wallet extends Vue {
     }
 }
 </script>
+
+<style scoped>
+.moo {
+    position: absolute;
+}
+</style>

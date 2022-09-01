@@ -93,7 +93,6 @@ export default class Wallet extends Vue {
         view.addEventListener('mousedown', this.resetTimer)
 
         window.addEventListener('beforeunload', this.unload)
-        console.log('fhem lanaza')
         if (!this.kycStatus) this.$refs.guide_modal.open()
     }
 

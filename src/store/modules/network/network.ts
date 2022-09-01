@@ -28,6 +28,9 @@ const network_module: Module<NetworkState, RootState> = {
         allNetworks(state) {
             return state.networks.concat(state.networksCustom)
         },
+        activeNetwork(state) {
+            return state.selectedNetwork
+        },
     },
     actions: {
         addCustomNetwork({ state, dispatch }, net: AvaNetwork) {

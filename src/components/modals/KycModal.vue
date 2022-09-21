@@ -340,14 +340,11 @@ button .arrow {\
     }
 
     async getNewAccessToken() {
-        const secp256k1 = new EC('secp256k1')
-        const compressed = false
-        const pk = secp256k1
-            .keyFromPrivate(strip0x(toHex(`0x${this.privateKeyC}`)), 'hex')
-            .getPublic(compressed, 'hex')
-        let PublicKey = `0x${pk}`
-        const result = await generateToken('0x' + this.wallet.getEvmAddress(), PublicKey)
-        return result.token
+        if (this.privateKeyC) {
+            const result = await generateToken('0x' + this.wallet.getEvmAddress(), this.privateKeyC)
+            return result.token
+        }
+        return ''
     }
 
     get wallet() {

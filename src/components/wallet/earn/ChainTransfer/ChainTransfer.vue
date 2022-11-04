@@ -341,32 +341,28 @@ export default class ChainTransfer extends Vue {
         let exportTxId
         this.exportState = TxState.started
 
-        try {
-            switch (sourceChain) {
-                case 'X':
-                    exportTxId = await wallet.exportFromXChain(
-                        amt,
-                        destinationChain as SDK.ExportChainsX,
-                        this.importFeeBN
-                    )
-                    break
-                case 'P':
-                    exportTxId = await wallet.exportFromPChain(
-                        amt,
-                        destinationChain as SDK.ExportChainsP,
-                        this.importFeeBN
-                    )
-                    break
-                case 'C':
-                    exportTxId = await wallet.exportFromCChain(
-                        amt,
-                        destinationChain as SDK.ExportChainsC,
-                        this.exportFeeBN
-                    )
-                    break
-            }
-        } catch (e) {
-            throw e
+        switch (sourceChain) {
+            case 'X':
+                exportTxId = await wallet.exportFromXChain(
+                    amt,
+                    destinationChain as SDK.ExportChainsX,
+                    this.importFeeBN
+                )
+                break
+            case 'P':
+                exportTxId = await wallet.exportFromPChain(
+                    amt,
+                    destinationChain as SDK.ExportChainsP,
+                    this.importFeeBN
+                )
+                break
+            case 'C':
+                exportTxId = await wallet.exportFromCChain(
+                    amt,
+                    destinationChain as SDK.ExportChainsC,
+                    this.exportFeeBN
+                )
+                break
         }
 
         this.exportId = exportTxId

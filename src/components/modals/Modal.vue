@@ -94,7 +94,7 @@ export default class Modal extends Vue {
 .modal_container {
     width: 100%;
     height: 100%;
-    margin-top: max(50px, 2vh);
+    margin-top: max(150px, 2vh);
     position: relative;
 }
 .modal_bg {
@@ -123,9 +123,9 @@ export default class Modal extends Vue {
     margin: 50px auto;
     z-index: 2;
     position: absolute;
-    top: max(50%, 300px);
+    top: max(50%, 50vh);
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, calc(-1 * max(50%, 50vh)));
     border-radius: var(--border-radius-lg);
 }
 

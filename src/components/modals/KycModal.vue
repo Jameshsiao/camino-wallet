@@ -50,13 +50,13 @@
 import 'reflect-metadata'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import Modal from '@/components/modals/Modal.vue'
-import { generateToken } from '@/kyc_api'
+import { generateToken, getNonce, generateTokenV2 } from '@/kyc_api'
 import snsWebSdk from '@sumsub/websdk'
 import MnemonicWallet from '@/js/wallets/MnemonicWallet'
 import { WalletType, WalletNameType } from '@c4tplatform/camino-wallet-sdk/dist'
 import { SingletonWallet } from '@/js/wallets/SingletonWallet'
 const EC = require('elliptic').ec
-const { isHexStrict, toHex, toUint8Array } = require('@arcblock/forge-util')
+const { isHexStrict, toHex } = require('@arcblock/forge-util')
 interface UserData {
     email: string
     phone: string
@@ -345,9 +345,10 @@ button .arrow {\
         const pk = secp256k1
             .keyFromPrivate(strip0x(toHex(`0x${this.privateKeyC}`)), 'hex')
             .getPublic(compressed, 'hex')
+
         let PublicKey = `0x${pk}`
-        const result = await generateToken('0x' + this.wallet.getEvmAddress(), PublicKey)
-        return result.token
+        const result = await generateTokenV2(this.privateKeyC, PublicKey)
+        return result.access_token
     }
 
     get wallet() {
@@ -359,9 +360,12 @@ button .arrow {\
         if (!this.userData.email || !this.userData.phone) return
         try {
             this.isLoading = true
+            // let { nonce } = await getNonce()
+            // console.log(nonce)
             const accessToken = await this.getNewAccessToken()
-            this.launchWebSdk(accessToken, this.userData.email, this.userData.phone)
-            this.userDataSubmitted = true
+            console.log(accessToken)
+            // this.launchWebSdk(accessToken, this.userData.email, this.userData.phone)
+            // this.userDataSubmitted = true
         } finally {
             this.isLoading = false
         }

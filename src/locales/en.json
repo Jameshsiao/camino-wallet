@@ -424,7 +424,7 @@
                 "export": "Export Transaction ID:",
                 "import": "Import Transaction ID:",
                 "message": "You have successfully transferred between chains.",
-                "again": "Start Again",
+                "again": "New Transfer",
                 "back": "Back to Earn"
             }
         },

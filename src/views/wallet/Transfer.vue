@@ -121,7 +121,7 @@
                                 block
                                 :disabled="!canSendAgain"
                             >
-                                Start Again
+                                New Transfer
                             </v-btn>
                         </template>
                     </div>
